@@ -1,12 +1,10 @@
 import "./styles.css";
 import { module1 } from "./module1.js";
 
-console.log(module1);
-
 class HashMap {
   constructor(capacity, loadFactor) {
     // We initialize an array of a specific size to act as our storage "buckets"
-    this.table = new Array(capacity);
+    this.hashTable = new Array(capacity).fill(null); // Initialize with null
     this.capacity = capacity; // also called buckets
     this.loadFactor = loadFactor;
   }
@@ -26,39 +24,57 @@ class HashMap {
   // 2. Set Method: Stores a key-value pair
   set(key, value) {
     const index = this._hash(key);
-
     // If the bucket at this index is empty, initialize it as an array (chaining)
-    if (!this.table[index]) {
-      this.table[index] = [];
+    if (!this.hashTable[index]) {
+      this.hashTable[index] = [];
     }
 
-    // Check if key already exists in the bucket to update it
-    for (let entry of this.table[index]) {
+    // Check if key already exists in the bucket to update it 
+    for (let entry of this.hashTable[index]) {
       if (entry[0] === key) {
         entry[1] = value;
         return;
       }
     }
     // Otherwise, push new key-value pair into the bucket
-    this.table[index].push([key, value]);
+    this.hashTable[index].push([key, value]);
   }
 
   // 3. Get Method: Retrieves a value by its key
   get(key) {
     const index = this._hash(key);
-    const table = this.table[index];
+    const hashTable = this.hashTable[index];
 
-    if (table) {
-      for (let entry of table) {
+    if (hashTable) {
+      for (let entry of hashTable) {
         if (entry[0] === key) return entry[1];
       }
     }
-    return undefined; // Return undefined if key doesn't exist
+    return null; // Return undefined if key doesn't exist
+  }
+
+  has(key) {
+    for (let i = 0; i < this.hashTable.length; i++) {
+      if (this.hashTable === 7) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 }
 
 // Usage Example
 const myMap = new HashMap(50, 0.75);
-console.log(myMap._hash("Smith"));
+console.log(myMap);
+console.log("The current capacity of the hashMap is: " + myMap.capacity);
+console.log("The current load capacity is: " + myMap.loadFactor);
+console.log("Extend the capacity of the haspMap when more than " + (Math.ceil(myMap.capacity * myMap.loadFactor)) + " table rows have been started");
+console.log("The hash value of the name key is: " + myMap._hash("name"));
 myMap.set("name", "Alice");
 console.log(myMap.get("name")); // Output: Alice
+console.log(myMap.hashTable);
+console.log(myMap.hashTable[7]);
+console.log(myMap.hashTable[7][0]);
+console.log(myMap.hashTable[7][0][0]);
+console.log(myMap.has("name"));
