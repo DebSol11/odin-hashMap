@@ -4,56 +4,61 @@ import { module1 } from "./module1.js";
 console.log(module1);
 
 class HashMap {
-  constructor(loadFactor, capacity) {
+  constructor(capacity, loadFactor) {
+    // We initialize an array of a specific size to act as our storage "buckets"
+    this.table = new Array(capacity);
+    this.capacity = capacity; // also called buckets
     this.loadFactor = loadFactor;
-    this.capacity = capacity;
   }
 
-  hash(key) {
+  // 1. Hash Function: Converts a string key into an index
+  _hash(key) {
+    // The underscore naming convention signals the method is for internal use only and should not be accessed directly from outside the class or module
     let hashCode = 0;
     const primeNumber = 31;
     for (let i = 0; i < key.length; i++) {
-      hashCode = primeNumber * hashCode + key.charCodeAt(i);
+      // charCodeAt gets the Unicode value of each character
+      hashCode = (primeNumber * hashCode + key.charCodeAt(i)) % this.capacity;
     }
     return hashCode;
   }
 
-  // // Simple hash function to convert key to index
-  // _hash(key) {
-  //   let hash = 0;
-  //   for (let i = 0; i < key.length; i++) {
-  //     hash = (hash + key.charCodeAt(i) * i) % this._storage.length;
-  //   }
-  //   return hash;
-  // }
-
-
+  // 2. Set Method: Stores a key-value pair
   set(key, value) {
     const index = this._hash(key);
-    
-    // Initialize bucket if it doesn't exist (chaining for collisions)
-    if (!this._storage[index]) {
-      this._storage[index] = [];
+
+    // If the bucket at this index is empty, initialize it as an array (chaining)
+    if (!this.table[index]) {
+      this.table[index] = [];
     }
 
-    // Check if key already exists to update it
-    for (let pair of this._storage[index]) {
-      if (pair[0] === key) {
-        pair[1] = value;
+    // Check if key already exists in the bucket to update it
+    for (let entry of this.table[index]) {
+      if (entry[0] === key) {
+        entry[1] = value;
         return;
       }
     }
+    // Otherwise, push new key-value pair into the bucket
+    this.table[index].push([key, value]);
+  }
 
-    // Otherwise, push new key-value pair
-    this._storage[index].push([key, value]);
+  // 3. Get Method: Retrieves a value by its key
+  get(key) {
+    const index = this._hash(key);
+    const table = this.table[index];
+
+    if (table) {
+      for (let entry of table) {
+        if (entry[0] === key) return entry[1];
+      }
+    }
+    return undefined; // Return undefined if key doesn't exist
   }
 }
 
-// const map = new MyHashMap();
-// map.set('user123', 'Alice');
-
-
-let newHashMap = new HashMap(0.75, 16);
-console.log(newHashMap.hash("Smith"));
-newHashMap.set("Peter", "Griffin");
-console.log(newHashMap);
+// Usage Example
+const myMap = new HashMap(50, 0.75);
+console.log(myMap._hash("Smith"));
+myMap.set("name", "Alice");
+console.log(myMap.get("name")); // Output: Alice
