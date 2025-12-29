@@ -95,13 +95,9 @@ export class HashMap {
     return counter;
   }
 
-  // was probably meant different
   clear() {
-    for (let i = 0; i < this.hashTable.length; i++) {
-      if (this.hashTable[i] != null) {
-        return this.hashTable[i].splice(i, 1);
-      }
-    }
+    this.hashTable = new Array(this.capacity).fill(null); // Initialize with null
+    this.size = 0; // number of stored unique keys
   }
 
   keys() {
@@ -138,30 +134,32 @@ export class HashMap {
 }
 
 // Usage Example
-// const myMap = new HashMap(50, 0.75);
-// console.log(myMap);
-// console.log("The current capacity of the hashMap is: " + myMap.capacity);
-// console.log("The current load Factor is: " + myMap.loadFactor);
-// console.log(
-//   "Extend the capacity of the haspMap when more than " +
-//     Math.ceil(myMap.capacity * myMap.loadFactor) +
-//     " table rows have been started"
-// );
-// console.log("The hash value of the name key is: " + myMap._hash("name"));
-// myMap.set("name", "Alice");
-// myMap.set("fart", "stinky");
-// myMap.set("wheel", "awesome");
-// console.log(myMap.get("name")); // Output: Alice
-// console.log(myMap);
-// console.log(myMap.hashTable);
-// console.log(myMap.hashTable[7]);
-// console.log(myMap.hashTable[7][0]);
-// console.log(myMap.hashTable[7][0][0]);
-// console.log(myMap.has("name"));
-// myMap.remove("name");
-// console.log(myMap.hashTable);
-// console.log(myMap.length());
-// // console.log(myMap.clear());
-// console.log(myMap.keys());
-// console.log(myMap.values());
-// console.log(myMap.entries());
+const myMap = new HashMap(50, 0.75);
+console.log(myMap);
+console.log("The current capacity of the hashMap is: " + myMap.capacity);
+console.log("The current load Factor is: " + myMap.loadFactor);
+console.log(
+  "Extend the capacity of the haspMap when more than " +
+    Math.ceil(myMap.capacity * myMap.loadFactor) +
+    " table rows have been started"
+);
+console.log("The hash value of the name key is: " + myMap._hash("name"));
+myMap.set("name", "Alice");
+myMap.set("fart", "stinky");
+myMap.set("wheel", "awesome");
+console.log(myMap.get("name")); // Output: Alice
+console.log(myMap);
+console.log(myMap.hashTable);
+console.log(myMap.hashTable[7]);
+console.log(myMap.hashTable[7][0]);
+console.log(myMap.hashTable[7][0][0]);
+console.log(myMap.has("name"));
+myMap.remove("name");
+console.log(myMap.hashTable);
+console.log(myMap.length());
+console.log(myMap.keys());
+console.log(myMap.values());
+console.log(myMap.entries());
+myMap.clear();
+console.log(myMap.hashTable);
+
