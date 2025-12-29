@@ -79,11 +79,40 @@ class HashMap {
       for (let i = 0; i < hashTableVariable.length; i++) {
         if (hashTableVariable[i][0] === key) {
           hashTableVariable.splice(key, 1);
-          return true
+          return true;
         }
       }
     }
     return false;
+  }
+
+  length() {
+    let counter = 0;
+    for (let i = 0; i < this.hashTable.length; i++) {
+      if (this.hashTable[i] != null) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
+  // was probably meant different
+  clear() {
+    for (let i = 0; i < this.hashTable.length; i++) {
+      if (this.hashTable[i] != null) {
+        return this.hashTable[i].splice(i, 1);
+      }
+    }
+  }
+
+  keys() {
+    let keysArray = [];
+    for (let i = 0; i < this.hashTable.length; i++) {
+      if (this.hashTable[i] && this.hashTable[i] != []) {
+        this.hashTable[i].forEach((pair) => keysArray.push(pair[0]));
+      }
+    }
+    return keysArray;
   }
 }
 
@@ -99,6 +128,8 @@ console.log(
 );
 console.log("The hash value of the name key is: " + myMap._hash("name"));
 myMap.set("name", "Alice");
+myMap.set("fart", "stinky");
+myMap.set("wheel", "awesome");
 console.log(myMap.get("name")); // Output: Alice
 console.log(myMap);
 console.log(myMap.hashTable);
@@ -106,5 +137,8 @@ console.log(myMap.hashTable[7]);
 console.log(myMap.hashTable[7][0]);
 console.log(myMap.hashTable[7][0][0]);
 console.log(myMap.has("name"));
-myMap.remove("name", myMap.hashTable);
+myMap.remove("name");
 console.log(myMap.hashTable);
+console.log(myMap.length());
+// console.log(myMap.clear());
+console.log(myMap.keys());
