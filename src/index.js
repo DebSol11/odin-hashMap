@@ -30,15 +30,15 @@ class HashMap {
     if (!this.hashTable[index]) {
       this.hashTable[index] = [];
     }
-    const hashTable = this.hashTable[index];
+    const hashTableVariable = this.hashTable[index];
     // Check if key already exists in the hashTable and update it if so
-    for (let i = 0; i < hashTable.length; i++) {
-      if (hashTable[i][0] === key) {
-        hashTable[i][1] = value;
+    for (let i = 0; i < hashTableVariable.length; i++) {
+      if (hashTableVariable[i][0] === key) {
+        hashTableVariable[i][1] = value;
         return;
       }
     }
-    hashTable.push([key, value]);
+    hashTableVariable.push([key, value]);
     this.size++;
     // check the loadFactor and rehash here
     // performance increase if further understood: do not rehash but rather dynamically prolonging the array, safes resources
@@ -47,12 +47,12 @@ class HashMap {
   // 3. Get Method: Retrieves a value by its key
   get(key) {
     const index = this._hash(key);
-    const hashTable = this.hashTable[index];
+    const hashTableVariable = this.hashTable[index];
 
-    if (hashTable) {
-      for (let i = 0; i < hashTable.length; i++) {
-        if (hashTable[i][0] === key) {
-          return hashTable[i][1];
+    if (hashTableVariable) {
+      for (let i = 0; i < hashTableVariable.length; i++) {
+        if (hashTableVariable[i][0] === key) {
+          return hashTableVariable[i][1];
         }
       }
     }
@@ -61,11 +61,25 @@ class HashMap {
 
   has(key) {
     const index = this._hash(key);
-    const hashTable = this.hashTable[index];
-    if (hashTable) {
-      for (let i = 0; i < hashTable.length; i++) {
-        if (hashTable[i][0] === key) {
+    const hashTableVariable = this.hashTable[index];
+    if (hashTableVariable) {
+      for (let i = 0; i < hashTableVariable.length; i++) {
+        if (hashTableVariable[i][0] === key) {
           return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  remove(key) {
+    const index = this._hash(key);
+    const hashTableVariable = this.hashTable[index];
+    if (hashTableVariable) {
+      for (let i = 0; i < hashTableVariable.length; i++) {
+        if (hashTableVariable[i][0] === key) {
+          hashTableVariable.splice(key, 1);
+          return true
         }
       }
     }
@@ -86,8 +100,11 @@ console.log(
 console.log("The hash value of the name key is: " + myMap._hash("name"));
 myMap.set("name", "Alice");
 console.log(myMap.get("name")); // Output: Alice
+console.log(myMap);
 console.log(myMap.hashTable);
 console.log(myMap.hashTable[7]);
 console.log(myMap.hashTable[7][0]);
 console.log(myMap.hashTable[7][0][0]);
 console.log(myMap.has("name"));
+myMap.remove("name", myMap.hashTable);
+console.log(myMap.hashTable);
