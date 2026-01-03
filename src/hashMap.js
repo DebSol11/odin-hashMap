@@ -86,3 +86,50 @@ console.log(resizableHashMap.size);
 // Output: 1
 
 
+// length() {
+//     let counter = 0;
+//     for (let i = 0; i < this.hashTable.length; i++) {
+//       if (this.hashTable[i] != null) {
+//         counter++;
+//       }
+//     }
+//     return counter;
+//   }
+
+//   clear() {
+//     this.hashTable = new Array(this.capacity).fill(null); // Initialize with null
+//     this.size = 0; // number of stored unique keys
+//   }
+
+//   keys() {
+//     let keysArray = [];
+//     for (let i = 0; i < this.hashTable.length; i++) {
+//       if (this.hashTable[i] && this.hashTable[i] != []) {
+//         this.hashTable[i].forEach((pair) => keysArray.push(pair[0]));
+//       }
+//     }
+//     return keysArray;
+//   }
+
+//   values() {
+//     let valuesArray = [];
+//     for (let i = 0; i < this.hashTable.length; i++) {
+//       if (this.hashTable[i] && this.hashTable[i] != []) {
+//         this.hashTable[i].forEach((pair) => valuesArray.push(pair[1]));
+//       }
+//     }
+//     return valuesArray;
+//   }
+
+//   entries() {
+//     let entriesArray = [];
+//     for (let i = 0; i < this.hashTable.length; i++) {
+//       if (this.hashTable[i] && this.hashTable[i] != []) {
+//         this.hashTable[i].forEach((pair) =>
+//           entriesArray.push(this.hashTable[i])
+//         );
+//       }
+//     }
+//     return entriesArray;
+//   }
+
