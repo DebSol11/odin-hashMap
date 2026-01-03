@@ -84,3 +84,6 @@ resizableHashMap.delete("key2");
 console.log(resizableHashMap);
 console.log(resizableHashMap.size);
 // Output: 1
+
+
+
