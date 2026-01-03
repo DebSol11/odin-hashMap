@@ -37,16 +37,12 @@ class ResizableHashMap {
   }
 
   resize() {
-    const newCapacity = this.buckets.length * 2;
-    const newBuckets = new Array(newCapacity).fill(null).map(() => []);
-
-    for (let bucket of this.buckets) {
-      for (let [key, value] of bucket) {
-        const index = this.hash(key) % newCapacity;
-        newBuckets[index].push([key, value]);
-      }
-    }
-    this.buckets = newBuckets;
+    const oldBuckets = this.buckets;
+    const newCapacity = oldBuckets.length * 2;
+    this.buckets = new Array(newCapacity).fill(null).map(() => []);
+    for (const bucket of oldBuckets)
+      for (const [key, value] of bucket)
+        this.buckets[this.hash(key)].push([key, value]);
   }
 
   // Delete key-value pair
@@ -65,7 +61,6 @@ class ResizableHashMap {
   }
 }
 
-
 // Usage Example
 const resizableHashMap = new ResizableHashMap();
 resizableHashMap.set("key1", "value1");
@@ -79,12 +74,13 @@ resizableHashMap.set("key8", "value8");
 resizableHashMap.set("key9", "value9");
 resizableHashMap.set("key10", "value10");
 resizableHashMap.set("key11", "value11");
-// resizableHashMap.set("key12", "value12");
-// resizableHashMap.set("key13", "value13");
-// resizableHashMap.set("key14", "value14");
+resizableHashMap.set("key12", "value12");
+resizableHashMap.set("key13", "value13");
+resizableHashMap.set("key14", "value14");
+resizableHashMap.set("key15", "value15");
 resizableHashMap.set("key1", "updatedValue1");
 console.log(resizableHashMap);
 resizableHashMap.delete("key2");
 console.log(resizableHashMap);
 console.log(resizableHashMap.size);
- // Output: 1
+// Output: 1
