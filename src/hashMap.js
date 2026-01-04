@@ -11,7 +11,7 @@ class ResizableHashMap {
     this.loadFactor = loadFactor;
   }
 
-  hash(key) {
+  #hash(key) {
     let hashCode = 0;
     for (let char of key.toString()) {
       hashCode += char.charCodeAt(0);
@@ -23,7 +23,7 @@ class ResizableHashMap {
     if ((this.size + 1) / this.buckets.length > this.loadFactor) {
       this.resize();
     }
-    const index = this.hash(key);
+    const index = this.#hash(key);
     const bucket = this.buckets[index];
 
     for (let pair of bucket) {
@@ -42,12 +42,12 @@ class ResizableHashMap {
     this.buckets = new Array(newCapacity).fill(null).map(() => []);
     for (const bucket of oldBuckets)
       for (const [key, value] of bucket)
-        this.buckets[this.hash(key)].push([key, value]);
+        this.buckets[this.#hash(key)].push([key, value]);
   }
 
   // Delete key-value pair
   delete(key) {
-    const index = this.hash(key);
+    const index = this.#hash(key);
     const bucket = this.buckets[index];
 
     for (let i = 0; i < bucket.length; i++) {
@@ -59,10 +59,52 @@ class ResizableHashMap {
     }
     return false;
   }
+
+  length() {
+    return this.size;
+  }
+
+  // the clear function needs to be populated manually with the hashMap which you wish to delete by now
+  clear(hashMap) {
+    resizableHashMap = new ResizableHashMap();
+  }
+
+  keys() {
+    let keysArray = [];
+    for (let i = 0; i < this.buckets.length; i++) {
+      if (this.buckets[i]) {
+        this.buckets[i].forEach((pair) => keysArray.push(pair[0]));
+      }
+    }
+    return keysArray;
+  }
+
+  values() {
+    let valuesArray = [];
+    for (let i = 0; i < this.buckets.length; i++) {
+      if (this.buckets[i] && this.buckets[i] != []) {
+        this.buckets[i].forEach((pair) => valuesArray.push(pair[1]));
+      }
+    }
+    return valuesArray;
+  }
+
+  entries() {
+    let entriesArray = [];
+    for (let i = 0; i < this.buckets.length; i++) {
+      if (this.buckets[i] && this.buckets[i] != []) {
+        this.buckets[i].forEach((pair) =>
+          entriesArray.push(this.buckets[i])
+        );
+      }
+    }
+    return entriesArray;
+  }
+  
 }
 
 // Usage Example
-const resizableHashMap = new ResizableHashMap();
+let resizableHashMap = new ResizableHashMap();
 resizableHashMap.set("key1", "value1");
 resizableHashMap.set("key2", "value2");
 resizableHashMap.set("key3", "value3");
@@ -83,53 +125,11 @@ console.log(resizableHashMap);
 resizableHashMap.delete("key2");
 console.log(resizableHashMap);
 console.log(resizableHashMap.size);
-// Output: 1
-
-
-// length() {
-//     let counter = 0;
-//     for (let i = 0; i < this.hashTable.length; i++) {
-//       if (this.hashTable[i] != null) {
-//         counter++;
-//       }
-//     }
-//     return counter;
-//   }
-
-//   clear() {
-//     this.hashTable = new Array(this.capacity).fill(null); // Initialize with null
-//     this.size = 0; // number of stored unique keys
-//   }
-
-//   keys() {
-//     let keysArray = [];
-//     for (let i = 0; i < this.hashTable.length; i++) {
-//       if (this.hashTable[i] && this.hashTable[i] != []) {
-//         this.hashTable[i].forEach((pair) => keysArray.push(pair[0]));
-//       }
-//     }
-//     return keysArray;
-//   }
-
-//   values() {
-//     let valuesArray = [];
-//     for (let i = 0; i < this.hashTable.length; i++) {
-//       if (this.hashTable[i] && this.hashTable[i] != []) {
-//         this.hashTable[i].forEach((pair) => valuesArray.push(pair[1]));
-//       }
-//     }
-//     return valuesArray;
-//   }
-
-//   entries() {
-//     let entriesArray = [];
-//     for (let i = 0; i < this.hashTable.length; i++) {
-//       if (this.hashTable[i] && this.hashTable[i] != []) {
-//         this.hashTable[i].forEach((pair) =>
-//           entriesArray.push(this.hashTable[i])
-//         );
-//       }
-//     }
-//     return entriesArray;
-//   }
-
+console.log(
+  "The current length of the hashMap is: " + resizableHashMap.length()
+);
+// resizableHashMap.clear();
+// console.log(resizableHashMap);
+console.log(resizableHashMap.keys());
+console.log(resizableHashMap.values());
+console.log(resizableHashMap.entries());
