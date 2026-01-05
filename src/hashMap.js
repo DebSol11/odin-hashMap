@@ -4,7 +4,7 @@ import * as generalFunctions from "./generalFunctions";
 // // Source for guidance
 // // https://ithy.com/article/hashmap-in-javascript-2ml2bf26
 
-class ResizableHashMap {
+export class ResizableHashMap {
   constructor(initialCapacity = 16, loadFactor = 0.75) {
     this.buckets = new Array(initialCapacity).fill(null).map(() => []);
     this.size = 0;
@@ -15,6 +15,7 @@ class ResizableHashMap {
     let hashCode = 0;
     for (let char of key.toString()) {
       hashCode += char.charCodeAt(0);
+      hashCode = hashCode * generalFunctions.nextPrime(this.buckets.length); // multiply by a prime number close to this.buckets.length was stated by unknown to help avoid collisions 
     }
     return hashCode % this.buckets.length;
   }
@@ -100,36 +101,35 @@ class ResizableHashMap {
     }
     return entriesArray;
   }
-  
+
 }
 
-// Usage Example
-let resizableHashMap = new ResizableHashMap();
-resizableHashMap.set("key1", "value1");
-resizableHashMap.set("key2", "value2");
-resizableHashMap.set("key3", "value3");
-resizableHashMap.set("key4", "value4");
-resizableHashMap.set("key5", "value5");
-resizableHashMap.set("key6", "value6");
-resizableHashMap.set("key7", "value7");
-resizableHashMap.set("key8", "value8");
-resizableHashMap.set("key9", "value9");
-resizableHashMap.set("key10", "value10");
-resizableHashMap.set("key11", "value11");
-resizableHashMap.set("key12", "value12");
-resizableHashMap.set("key13", "value13");
-resizableHashMap.set("key14", "value14");
-resizableHashMap.set("key15", "value15");
-resizableHashMap.set("key1", "updatedValue1");
-console.log(resizableHashMap);
-resizableHashMap.delete("key2");
-console.log(resizableHashMap);
-console.log(resizableHashMap.size);
-console.log(
-  "The current length of the hashMap is: " + resizableHashMap.length()
-);
-// resizableHashMap.clear();
+
+// // Usage Example
+// let resizableHashMap = new ResizableHashMap();
+// resizableHashMap.set("key1", "value1");
+// resizableHashMap.set("key2", "value2");
+// resizableHashMap.set("key3", "value3");
+// resizableHashMap.set("key4", "value4");
+// resizableHashMap.set("key5", "value5");
+// resizableHashMap.set("key6", "value6");
+// resizableHashMap.set("key7", "value7");
+// resizableHashMap.set("key8", "value8");
+// resizableHashMap.set("key9", "value9");
+// resizableHashMap.set("key10", "value10");
+// resizableHashMap.set("key11", "value11");
+// resizableHashMap.set("key12", "value12");
+// resizableHashMap.set("key13", "value13");
+// resizableHashMap.set("key14", "value14");
+// resizableHashMap.set("key15", "value15");
+// resizableHashMap.set("key1", "updatedValue1");
 // console.log(resizableHashMap);
-console.log(resizableHashMap.keys());
-console.log(resizableHashMap.values());
-console.log(resizableHashMap.entries());
+// resizableHashMap.delete("key2");
+// console.log(resizableHashMap);
+// console.log(resizableHashMap.size);
+// console.log(
+//   "The current length of the hashMap is: " + resizableHashMap.length()
+// );
+// console.log(resizableHashMap.keys());
+// console.log(resizableHashMap.values());
+// console.log(resizableHashMap.entries());

@@ -6,6 +6,16 @@ function isPrime(n) {
   return true; // No divisors found, it's prime
 }
 
+function nextPrime(n) {
+  let currentNumber = n;
+  while (isPrime(currentNumber) === false) {
+    currentNumber += 1;
+    if (isPrime(currentNumber) === true) {
+      return currentNumber
+    }
+  } 
+}
+
 function safeFirstNprimesInArray(n) {
   let arrayPrime = [];
   let counter = 0;
@@ -18,4 +28,4 @@ function safeFirstNprimesInArray(n) {
   return arrayPrime;
 }
 
-export { isPrime, safeFirstNprimesInArray };
+export { isPrime, nextPrime, safeFirstNprimesInArray };
